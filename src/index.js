@@ -79,6 +79,16 @@ async function modifyUnityProjSemVer() {
                     semverAsObj.minor = 0;
                     semverAsObj.patch = 0;
                     break;
+                case "manual":
+                    let manualSemVer = core.getInput('semver').toLowerCase().split(".");
+                    try{
+                        semverAsObj.major = parseInt(manualSemVer[0]);
+                        semverAsObj.minor = parseInt(manualSemVer[1]);
+                        semverAsObj.patch = parseInt(manualSemVer[2]);
+                    }catch(error){
+                        core.setFailed("failed to parse manaul semver.");
+                    }
+                    break;
                 default:
                     core.setFailed("major, minor or patch must be specified as semver-update-type.");
                     break;
