@@ -11,6 +11,9 @@ inputs:
   project-settings-path: # example ProjectSettings/ProjectSettings.asset
     description: 'Path to the ProjectSettings.asset file'
     required: false
+  semver: # manual semantic version to set if manual is entered in semver-update-type
+    description: 'The semantic version we will set if manual is chosen in semver-update-type'
+    required: false 
 outputs:
   semver-number: # id of output
     description: 'The new semver number of this Unity project.'
