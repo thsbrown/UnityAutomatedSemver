@@ -52,7 +52,9 @@ async function modifyUnityProjSemVer() {
                 minor: 0,
                 patch: 0
             }
-            bundleVersionAsArray = doc.PlayerSettings.bundleVersion.split(".");
+            // An empty bundleVersion parses as null; treat it as 0.0.0
+            let existingBundleVersion = doc.PlayerSettings.bundleVersion ? String(doc.PlayerSettings.bundleVersion) : "0.0.0";
+            bundleVersionAsArray = existingBundleVersion.split(".");
             semverAsObj.major = parseInt(bundleVersionAsArray[0]);
             semverAsObj.minor = parseInt(bundleVersionAsArray[1]);
             semverAsObj.patch = parseInt(bundleVersionAsArray[2]);
@@ -107,7 +109,7 @@ async function modifyUnityProjSemVer() {
                     return console.log(`Something went wrong reading the original ProjectSetting.asset! Error message follows: \n${error}`);
                 }
 
-                var result = data.replace(/\b(bundleVersion\: )(([0-9]+).([0-9]+).([0-9]+))\b/, newSemverAsString);
+                var result = data.replace(/^(\s*)bundleVersion:.*$/m, `$1${newSemverAsString}`);
                 fs.writeFile(projectSettingsFilePath, result, 'utf8', (error) => {
                     if (error){
                         return console.log(`Something went wrong inserting the new semver into the original ProjectSetting.asset! Error message follows: \n${error}`);

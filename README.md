@@ -19,6 +19,10 @@ When calling this action, you can specify the type of semver update you'd like t
 
 The path to the ProjectSettings/ProjectSettings.asset file for your unity project. If not specified will action will attempt to automatically find it.
 
+### Empty bundleVersion
+
+If `bundleVersion` is empty in ProjectSettings.asset, it is treated as `0.0.0` and the new version is still written to the file.
+
 ## Outputs 
 
 This is the data that you can use after this action has completed, in other actions & scripts.
